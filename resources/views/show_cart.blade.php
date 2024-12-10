@@ -7,13 +7,27 @@
     <title>Cart</title>
 </head>
 <body>
+    {{-- menampilkan error --}}
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <p>{{ $error }}</p>
+        @endforeach
+    @endif
+
+    {{-- pengkondisian jika data kosong --}}
     @if ($carts->isEmpty())
         <p>Tidak ada data</p>
     @else
         @foreach ($carts as $cart)
             <img src="{{ url('storage/' . $cart->product->image) }}" alt="{{ $cart->product->image }}" height="100px">
             <p>Name: {{ $cart->product->name }}</p>
-            <p>Amount: {{ $cart->amount }}</p>
+            <br>
+            <form action="{{ route('update_cart', $cart) }}" method="post">
+                @method('patch')
+                @csrf
+                <input type="number" name="amount" value={{ $cart->amount }}>
+                <button type="submit">Update amount</button>
+            </form>
         @endforeach
     @endif
     
