@@ -7,12 +7,15 @@
     <title>{{ $product->name }}</title>
 </head>
 <body>
+    <a href="{{ route('index_product') }}">Back</a>
     <p>Name: {{ $product->name }}</p>
     <p>Description: {{ $product->description }}</p>
     <p>Price: {{ $product->price }}</p>
     <p>RP: {{ $product->stock }}</p>
     <img src="{{ url('storage/' . $product->image) }}" alt="{{ $product->image }}" height="100px">
     <br>
-    <a href="{{ route('index_product') }}">Back</a>
+    <form action="{{ route('edit_product', $product) }}" method="get">
+        <button type="submit">Edit</button>
+    </form>
 </body>
 </html>
