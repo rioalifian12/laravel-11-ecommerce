@@ -7,21 +7,24 @@
     <title>Order</title>
 </head>
 <body>
-    
-    <table border="1px">
-        <tr>
-            <td>ID</td>
-            <td>Name</td>
-            <td>Created At</td>
-        </tr>
-        @foreach ($orders as $order)
-        <tr>
-            <td>{{ $order->id }}</td>
-            <td>{{ $order->user->name }}</td>
-            <td>{{ $order->created_at }}</td>
-        </tr>
-        @endforeach
-    </table>
-    
+    @foreach ($orders as $order)
+        <p>{{ $order->id }}</p>
+        <p>{{ $order->user->name }}</p>
+        <p>{{ $order->created_at }}</p>
+        <p>
+            @if ($order->is_paid == true)
+                Paid
+            @else
+                Unpaid
+                @if ($order->payment_receipt)
+                    <a href="{{ url('storage/' . $order->payment_receipt) }}">Show payment receipt</a>
+                @endif
+                <form action="{{ route('confirm_payment', $order) }}" method="post">
+                    @csrf
+                    <button type="submit">Confirm</button>
+                </form>
+            @endif
+        </p>
+    @endforeach
 </body>
 </html>
