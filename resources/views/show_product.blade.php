@@ -10,8 +10,8 @@
     <a href="{{ route('index_product') }}">Back</a>
     <p>Name: {{ $product->name }}</p>
     <p>Description: {{ $product->description }}</p>
-    <p>Price: {{ $product->price }}</p>
-    <p>RP: {{ $product->stock }}</p>
+    <p>Rp. {{ $product->price }}</p>
+    <p>Stock: {{ $product->stock }}</p>
     <img src="{{ url('storage/' . $product->image) }}" alt="{{ $product->image }}" height="100px">
     <br>
     <form action="{{ route('edit_product', $product) }}" method="get">
