@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -21,7 +22,7 @@ class Product extends Model
 
     public function transactions()
     {
-        return $this->belongsTo(Order::class);
+        return $this->hasMany(Transaction::class);
     }
 
     public function carts()
