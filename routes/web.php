@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
@@ -24,3 +25,5 @@ Route::post('/cart/{product}', [CartController::class, 'add_to_cart'])->name('ad
 Route::get('/cart', [CartController::class, 'show_cart'])->name('show_cart');
 Route::patch('/cart/{cart}', [CartController::class, 'update_cart'])->name('update_cart');
 Route::delete('cart/{cart}', [CartController::class, 'delete_cart'])->name('delete_cart');
+// order
+Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
