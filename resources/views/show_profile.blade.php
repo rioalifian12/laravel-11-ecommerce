@@ -1,32 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Profiile</title>
-</head>
-<body>
-    {{-- menampilkan error --}}
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
-            <p>{{ $error }}</p>
-        @endforeach
-    @endif
+@extends('layouts.app')
 
-    <p>Name: {{ $user->name }}</p>
-    <p>Email: {{ $user->email }}</p>
-    <p>Role: {{ $user->is_admin ? 'Admin' : 'Member' }}</p>
+@section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">{{ __('Profile') }}</div>
 
-    <form action="{{ route('edit_profile') }}" method="post">
-        @csrf
-        <label>Name</label><br>
-        <input type="text" name="name" value="{{ $user->name }}"><br>
-        <label>Password</label><br>
-        <input type="password" name="password"><br>
-        <label>Passowrd Confirmation</label><br>
-        <input type="password" name="password_confirmation"><br>
-        <button type="submit">Change</button>
-    </form>
-</body>
-</html>
+                    <div class="card-body">
+                        {{-- menampilkan error --}}
+                        @if ($errors->any())
+                            @foreach ($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                        @endif
+
+                        <form action="{{ route('edit_profile') }}" method="post">
+                            @csrf
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" name="name" placeholder="Name" class="form-control" value="{{ $user->name }}">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Role</label>
+                                <input type="text" name="role" class="form-control" value="{{ $user->is_admin ? 'Admin' : 'Member' }}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" name="password" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Passowrd Confirmation</label>
+                                <input type="password" name="password_confirmation" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Change</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

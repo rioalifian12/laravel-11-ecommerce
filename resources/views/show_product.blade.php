@@ -1,34 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ $product->name }}</title>
-</head>
-<body>
-    <a href="{{ route('index_product') }}">Back</a>
-    <p>Name: {{ $product->name }}</p>
-    <p>Description: {{ $product->description }}</p>
-    <p>Rp. {{ $product->price }}</p>
-    <p>Stock: {{ $product->stock }}</p>
-    <img src="{{ url('storage/' . $product->image) }}" alt="{{ $product->image }}" height="100px">
-    <br>
-    
-    <form action="{{ route('edit_product', $product) }}" method="get">
-        <button type="submit">Edit</button>
-    </form>
+@extends('layouts.app')
 
-    <form action="{{ route('add_to_cart', $product) }}" method="post">
-        @csrf
-        <input type="number" name="amount" value=1>
-        <button type="submit">Add to cart</button>
-    </form>
-    {{-- menampilkan error --}}
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
-            <p>{{ $error }}</p>
-        @endforeach
-    @endif
-</body>
-</html>
+@section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">{{ __('Product Detail') }}</div>
+
+                    <div class="card-body">
+                        <div class="d-flex justify-content-around">
+                            <div class="">
+                                <img src="{{ url('storage/' . $product->image) }}" alt="{{ $product->image }}" height="100px">
+                            </div>
+                            <div class="">
+                                <h1>Name: {{ $product->name }}</h1>
+                                <h6>{{ $product->description }}</h6>
+                                <h3>Rp. {{ $product->price }}</h3>
+                                <hr>
+                                <p>Stock: {{ $product->stock }} left</p>
+                                <form action="{{ route('add_to_cart', $product) }}" method="post">
+                                    @csrf
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" aria-describedby="basic-addon2" name="amount" value=1>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" type="submit">Add to cart</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <form action="{{ route('edit_product', $product) }}" method="get">
+                                    <button class="btn btn-primary" type="submit">Edit</button>
+                                </form>
+                            </div>
+                        </div>
+                        {{-- menampilkan error --}}
+                        @if ($errors->any())
+                            @foreach ($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
