@@ -7,6 +7,10 @@
                 <div class="card">
                     <div class="card-header">{{ __('Order Detail') }}</div>
 
+                    @php
+                        $total_price = 0;
+                    @endphp
+
                     <div class="card-body">
                         <h5 class="card-title">Order ID {{ $order->id }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">By {{ $order->user->name }}</h6>
@@ -18,9 +22,14 @@
                         @endif
                         <hr>
                         @foreach ($order->transactions as $transaction)
-                            <p>{{ $transaction->product->name }} - {{ $transaction->amount }} pcs</p>
-                            <p></p>
+                            <p>{{ $transaction->product->name }}</p>
+                            <p class="card-subtitle mb-2 text-muted">{{ $transaction->product->price }} x {{ $transaction->amount }} {{ $transaction->product->price * $transaction->amount }}</p>
+                            @php
+                                $total_price += $transaction->product->price * $transaction->amount;
+                            @endphp
                         @endforeach
+                        <hr>
+                        <p>Total: Rp. {{ $total_price }}</p>
                         <hr>
                         @if ($order->is_paid == false && $order->payment_receipt == null)
                             <form action="{{ route('submit_payment_receipt', $order) }}" method="post" enctype="multipart/form-data">
